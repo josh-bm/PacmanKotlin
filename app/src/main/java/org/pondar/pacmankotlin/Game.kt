@@ -67,6 +67,33 @@ class Game(private var context: Context,view: TextView) {
         this.w = w
     }
 
+    fun movePacmanUp(pixels: Int) {
+        //still within our boundaries?
+        if (pacy + pixels + pacBitmap.height < w) {
+            pacy = pacy + pixels
+            doCollisionCheck()
+            gameView.invalidate()
+        }
+    }
+
+    fun movePacmanDown(pixels: Int) {
+        //still within our boundaries?
+        if (pacy + pixels + pacBitmap.height < w) {
+            pacy = pacy + pixels
+            doCollisionCheck()
+            gameView.invalidate()
+        }
+    }
+
+    fun movePacmanLeft(pixels: Int) {
+        //still within our boundaries?
+        if (pacx + pixels + pacBitmap.width < w) {
+            pacx = pacx + pixels
+            doCollisionCheck()
+            gameView.invalidate()
+        }
+    }
+
     fun movePacmanRight(pixels: Int) {
         //still within our boundaries?
         if (pacx + pixels + pacBitmap.width < w) {

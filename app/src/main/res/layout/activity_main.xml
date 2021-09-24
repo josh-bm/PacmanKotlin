@@ -5,6 +5,35 @@
     android:layout_height="match_parent"
     tools:context="org.pondar.pacmankotlin.MainActivity" >
 
+
+    <!-- Notice how the custom view is referenced here with
+    a full package path-->
+    <org.pondar.pacmankotlin.GameView
+        android:id="@+id/gameView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+    </org.pondar.pacmankotlin.GameView>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/move_up"
+        android:id="@+id/moveUp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/move_down"
+        android:id="@+id/moveDown"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/move_left"
+        android:id="@+id/moveLeft"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,14 +46,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/points" />
-
-    <!-- Notice how the custom view is referenced here with
-    a full package path-->
-    <org.pondar.pacmankotlin.GameView
-        android:id="@+id/gameView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </org.pondar.pacmankotlin.GameView>
 
 </LinearLayout>
