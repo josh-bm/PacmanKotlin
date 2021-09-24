@@ -67,27 +67,41 @@ class Game(private var context: Context,view: TextView) {
         this.w = w
     }
 
-    fun movePacmanUpOrDown(pixels: Int) {
-        //Checks if coordinates are less than 1 so it doesn't go past boundaries
-        if(pacy >= 0) {
-            //Checks if coordinates + pixels added + height of pacman is less than height of screen,
-            // then it can move
+    fun movePacmanUp(pixels: Int) {
+        //Checks if coordinates are less than 0 so it doesn't go past boundaries
+        if (pacy + pixels + pacBitmap.height > 0) {
+            pacy = pacy + pixels
+            doCollisionCheck()
+            gameView.invalidate()
+        }
+    }
+
+    fun movePacmanDown(pixels: Int) {
+        //Checks if coordinates are less than 0 so it doesn't go past boundaries
             if (pacy + pixels + pacBitmap.height < h) {
                 pacy = pacy + pixels
                 doCollisionCheck()
                 gameView.invalidate()
-            }
         }
     }
 
-    fun movePacmanLeftOrRight(pixels: Int) {
-        //still within our boundaries?
-        if(pacx >= 0) {
+    fun movePacmanLeft(pixels: Int) {
+        //Checks if coordinates are less than 1 so it doesn't go past boundaries
         if (pacx + pixels + pacBitmap.width < w) {
                 pacx = pacx + pixels
                 doCollisionCheck()
                 gameView.invalidate()
-            }
+
+        }
+    }
+
+    fun movePacmanRight(pixels: Int) {
+        //Checks if coordinates are less than 1 so it doesn't go past boundaries
+        if (pacx + pixels + pacBitmap.width > 0) {
+            pacx = pacx + pixels
+            doCollisionCheck()
+            gameView.invalidate()
+
         }
     }
 
