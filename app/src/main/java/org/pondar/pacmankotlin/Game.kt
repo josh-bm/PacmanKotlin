@@ -67,41 +67,30 @@ class Game(private var context: Context,view: TextView) {
         this.w = w
     }
 
-    fun movePacmanUp(pixels: Int) {
-        //still within our boundaries?
-        if (pacy + pixels + pacBitmap.height < w) {
-            pacy = pacy + pixels
-            doCollisionCheck()
-            gameView.invalidate()
+    fun movePacmanUpOrDown(pixels: Int) {
+        //Checks if coordinates are less than 1 so it doesn't go past boundaries
+        if(pacy >= 0) {
+            //Checks if coordinates + pixels added + height of pacman is less than height of screen,
+            // then it can move
+            if (pacy + pixels + pacBitmap.height < h) {
+                pacy = pacy + pixels
+                doCollisionCheck()
+                gameView.invalidate()
+            }
         }
     }
 
-    fun movePacmanDown(pixels: Int) {
+    fun movePacmanLeftOrRight(pixels: Int) {
         //still within our boundaries?
-        if (pacy + pixels + pacBitmap.height < w) {
-            pacy = pacy + pixels
-            doCollisionCheck()
-            gameView.invalidate()
-        }
-    }
-
-    fun movePacmanLeft(pixels: Int) {
-        //still within our boundaries?
+        if(pacx >= 0) {
         if (pacx + pixels + pacBitmap.width < w) {
-            pacx = pacx + pixels
-            doCollisionCheck()
-            gameView.invalidate()
+                pacx = pacx + pixels
+                doCollisionCheck()
+                gameView.invalidate()
+            }
         }
     }
 
-    fun movePacmanRight(pixels: Int) {
-        //still within our boundaries?
-        if (pacx + pixels + pacBitmap.width < w) {
-            pacx = pacx + pixels
-            doCollisionCheck()
-            gameView.invalidate()
-        }
-    }
 
     //TODO check if the pacman touches a gold coin
     //and if yes, then update the neccesseary data
