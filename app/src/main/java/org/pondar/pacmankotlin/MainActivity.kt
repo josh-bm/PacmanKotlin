@@ -17,9 +17,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var myTimer: Timer = Timer()
     var counter : Int = 0
     //constants for directions - define the rest yourself
-    val UP = 4
     private val RIGHT = 1
     private val LEFT = 1
+    val UP = 3
+    val DOWN = 4
+
 
     //you should put the "running" and "direction" variable in the game class
     private var running = false
@@ -65,23 +67,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         game.newGame()
 
         binding.moveUp.setOnClickListener {
-            game.moveY(50)
+            game.moveUp(50)
 
         }
 
         binding.moveDown.setOnClickListener {
-            game.moveY(-50)
+            game.moveDown(50)
 
         }
 
         //correct
         binding.moveLeft.setOnClickListener {
-            game.move(-50)
+            game.moveLeft(50)
 
         //correct
         }
         binding.moveRight.setOnClickListener {
-            game.move(50)
+            game.moveRight(50)
 
         }
     }
@@ -121,7 +123,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             if (direction==RIGHT)
             { // move right
-                game.move(20)
+                game.moveRight(50)
                 //move the pacman - you
                 //should call a method on your game class to move
                 //the pacman instead of this - you have already made that
@@ -129,7 +131,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             else if (direction==LEFT)
             {
                 //move pacman left.
-                game.move(-20)
+                game.moveLeft(50)
+            }
+
+            else if (direction==UP)
+            {
+                //move pacman left.
+                game.moveUp(50)
+            }
+
+            else if (direction==DOWN)
+            {
+                //move pacman left.
+                game.moveDown(50)
             }
 
         }

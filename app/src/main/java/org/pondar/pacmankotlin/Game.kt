@@ -66,19 +66,30 @@ class Game(private var context: Context,view: TextView) {
         this.w = w
     }
 
-    fun move(pixels: Int) {
+    fun moveRight(pixels: Int) {
         //still within our boundaries?
         // right boundary
         if (pacx + pixels + pacBitmap.width < w)
             pacx += pixels
-        // left boundary
-        // if x > 0 + size of pacman
-        else if(pacx - pixels + pacBitmap.width > 0 + pacBitmap.width)
-            pacx += pixels
         gameView.invalidate()//redraw everything
     }
 
-    fun moveY(pixels: Int){
+    fun moveLeft(pixels: Int){
+        // left boundary
+        // if location + pixels added + size of pacman > 0 + size of pacman
+        if(pacx - pixels + pacBitmap.width > 0 + pacBitmap.width)
+            pacx -= pixels
+        gameView.invalidate()//redraw everything
+    }
+
+    fun moveUp(pixels: Int){
+        // Upper boundary
+        if (pacy - pixels + pacBitmap.height > 0 + pacBitmap.height)
+            pacy -= pixels
+        gameView.invalidate()//redraw everything
+    }
+
+    fun moveDown(pixels: Int){
         // bottom boundary
         if (pacy + pixels + pacBitmap.height < h)
             pacy += pixels
