@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.widget.TextView
+import java.lang.Math.random
 import java.util.ArrayList
 
 
@@ -18,9 +19,14 @@ class Game(private var context: Context,view: TextView) {
         private var points : Int = 0
         //bitmap of the pacman
         var pacBitmap: Bitmap
+        var coinBitmap: Bitmap
+
+
         var pacx: Int = 0
         var pacy: Int = 0
 
+        var coinx: Int = 0
+        var coiny: Int = 0
 
         //did we initialize the coins?
         var coinsInitialized = false
@@ -40,6 +46,10 @@ class Game(private var context: Context,view: TextView) {
 
     }
 
+    init {
+        coinBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.coin)
+    }
+
     fun setGameView(view: GameView) {
         this.gameView = view
     }
@@ -55,6 +65,9 @@ class Game(private var context: Context,view: TextView) {
     fun newGame() {
         pacx = 50
         pacy = 400 //just some starting coordinates - you can change this.
+
+        coinx = 50
+        coiny = 500
         //reset the points
         coinsInitialized = false
         points = 0

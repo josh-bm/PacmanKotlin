@@ -22,9 +22,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val LEFT = 3
     private val RIGHT = 4
 
-
-
-
     //you should put the "running" and "direction" variable in the game class
     private var running = false
     var direction = RIGHT

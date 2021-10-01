@@ -11,6 +11,7 @@
     <string name="continueLabel">Continue</string>
     <string name="reset">Reset</string>
     <string name="timerValue">Timer Value: %1$d</string>
+    <string name="timeLeft">Time Left: %60$d</string>
 
 
     <string name="action_settings">Settings</string>
