@@ -43,12 +43,9 @@ class Game(private var context: Context,view: TextView) {
     //it's a good place to initialize our images.
     init {
         pacBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.pacman)
-
-    }
-
-    init {
         coinBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.coin)
     }
+
 
     fun setGameView(view: GameView) {
         this.gameView = view
@@ -58,7 +55,8 @@ class Game(private var context: Context,view: TextView) {
     fun initializeGoldcoins()
     {
         //DO Stuff to initialize the array list with some coins.
-
+        coinx = 50
+        coiny = 500
         coinsInitialized = true
     }
 
@@ -66,13 +64,15 @@ class Game(private var context: Context,view: TextView) {
         pacx = 50
         pacy = 400 //just some starting coordinates - you can change this.
 
-        coinx = 50
-        coiny = 500
         //reset the points
         coinsInitialized = false
         points = 0
         pointsView.text = "${context.resources.getString(R.string.points)} $points"
+
+        initializeGoldcoins()
+
         gameView.invalidate() //redraw screen
+
     }
     fun setSize(h: Int, w: Int) {
         this.h = h
