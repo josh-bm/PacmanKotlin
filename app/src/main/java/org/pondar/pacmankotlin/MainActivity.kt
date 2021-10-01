@@ -17,10 +17,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var myTimer: Timer = Timer()
     var counter : Int = 0
     //constants for directions - define the rest yourself
-    private val RIGHT = 1
-    private val LEFT = 1
-    val UP = 3
-    val DOWN = 4
+    val UP = 1
+    val DOWN = 2
+    private val LEFT = 3
+    private val RIGHT = 4
+
+
 
 
     //you should put the "running" and "direction" variable in the game class
@@ -98,7 +100,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         //This method is called directly by the timer
         //and runs in the same thread as the timer - i.e the background
 
-        //we could do updates here TO GAME LOGIC,
+        // we could do updates here TO GAME LOGIC,
         // but not updates TO ACTUAL UI
 
         //We call the method that will work with the UI
