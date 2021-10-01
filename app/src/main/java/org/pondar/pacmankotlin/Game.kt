@@ -106,5 +106,4 @@ class Game(private var context: Context,view: TextView) {
 
     }
 
-
 }
