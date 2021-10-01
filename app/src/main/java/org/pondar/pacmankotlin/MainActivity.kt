@@ -6,10 +6,24 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.View.OnClickListener
 import android.widget.Toast
 import org.pondar.pacmankotlin.databinding.ActivityMainBinding
+import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
+
+    private var myTimer: Timer = Timer()
+    var counter : Int = 0
+    //constants for directions - define the rest yourself
+    val UP = 4
+    private val RIGHT = 1
+    private val LEFT = 1
+
+    //you should put the "running" and "direction" variable in the game class
+    private var running = false
+    var direction = RIGHT
 
     //reference to the game class.
     private lateinit var game: Game
@@ -28,29 +42,110 @@ class MainActivity : AppCompatActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         Log.d("onCreate","Oncreate called")
 
+        binding.startButton.setOnClickListener(this)
+        binding.stopButton.setOnClickListener(this)
+        binding.resetButton.setOnClickListener(this)
+
+        //make a new timer
+        running = true //should the game be running?
+
+        myTimer.schedule(object : TimerTask() {
+            override fun run() {
+                timerMethod()
+            }
+
+        }, 0, 200) //0 indicates we start now, 200
+        //is the number of miliseconds between each call
+
         game = Game(this,binding.pointsView)
 
-        //intialize the game view clas and game class
+        //intialize the game view class and game class
         game.setGameView(binding.gameView)
         binding.gameView.setGame(game)
         game.newGame()
 
         binding.moveUp.setOnClickListener {
-            game.movePacmanUp(-50)
+            game.moveY(50)
 
         }
 
         binding.moveDown.setOnClickListener {
-            game.movePacmanDown(50)
+            game.moveY(-50)
 
         }
 
+        //correct
         binding.moveLeft.setOnClickListener {
-            game.movePacmanLeft(-50)
+            game.move(-50)
 
+        //correct
         }
         binding.moveRight.setOnClickListener {
-            game.movePacmanRight(50)
+            game.move(50)
+
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        //just to make sure if the app is killed, that we stop the timer.
+        myTimer.cancel()
+    }
+
+    private fun timerMethod() {
+        //This method is called directly by the timer
+        //and runs in the same thread as the timer - i.e the background
+
+        //we could do updates here TO GAME LOGIC,
+        // but not updates TO ACTUAL UI
+
+        //We call the method that will work with the UI
+        //through the runOnUiThread method.
+
+        this.runOnUiThread(timerTick)
+        //timerTick.run() //try doing this instead of the above...will crash the app!
+
+    }
+
+    private val timerTick = Runnable {
+        //This method runs in the same thread as the UI.
+        // so we can draw
+        if (running) {
+            counter++
+            //update the counter - notice this is NOT seconds in this example
+            //you need TWO counters - one for the timer count down that will
+            // run every second and one for the pacman which need to run
+            //faster than every second
+            binding.textView.text = getString(R.string.timerValue,counter)
+
+
+            if (direction==RIGHT)
+            { // move right
+                game.move(20)
+                //move the pacman - you
+                //should call a method on your game class to move
+                //the pacman instead of this - you have already made that
+            }
+            else if (direction==LEFT)
+            {
+                //move pacman left.
+                game.move(-20)
+            }
+
+        }
+    }
+
+    //if anything is pressed - we do the checks here
+    override fun onClick(v: View) {
+        if (v.id == R.id.startButton) {
+            running = true
+        } else if (v.id == R.id.stopButton) {
+            running = false
+        } else if (v.id == R.id.resetButton) {
+            counter = 0
+            game.newGame() //you should call the newGame method instead of this
+            running = false
+            binding.textView.text = getString(R.string.timerValue,counter)
 
         }
     }

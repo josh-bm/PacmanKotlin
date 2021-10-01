@@ -52,7 +52,6 @@ class Game(private var context: Context,view: TextView) {
         coinsInitialized = true
     }
 
-
     fun newGame() {
         pacx = 50
         pacy = 400 //just some starting coordinates - you can change this.
@@ -67,43 +66,27 @@ class Game(private var context: Context,view: TextView) {
         this.w = w
     }
 
-    fun movePacmanUp(pixels: Int) {
-        //Checks if coordinates are less than 0 so it doesn't go past boundaries
-        if (pacy + pixels + pacBitmap.height > 0) {
-            pacy = pacy + pixels
-            doCollisionCheck()
-            gameView.invalidate()
-        }
+    fun move(pixels: Int) {
+        //still within our boundaries?
+        // right boundary
+        if (pacx + pixels + pacBitmap.width < w)
+            pacx += pixels
+        // left boundary
+        // if x > 0 + size of pacman
+        else if(pacx - pixels + pacBitmap.width > 0 + pacBitmap.width)
+            pacx += pixels
+        gameView.invalidate()//redraw everything
     }
 
-    fun movePacmanDown(pixels: Int) {
-        //Checks if coordinates are less than 0 so it doesn't go past boundaries
-            if (pacy + pixels + pacBitmap.height < h) {
-                pacy = pacy + pixels
-                doCollisionCheck()
-                gameView.invalidate()
-        }
+    fun moveY(pixels: Int){
+        // bottom boundary
+        if (pacy + pixels + pacBitmap.height < h)
+            pacy += pixels
+        gameView.invalidate()//redraw everything
     }
 
-    fun movePacmanLeft(pixels: Int) {
-        //Checks if coordinates are less than 1 so it doesn't go past boundaries
-        if (pacx + pixels + pacBitmap.width < w) {
-                pacx = pacx + pixels
-                doCollisionCheck()
-                gameView.invalidate()
 
-        }
-    }
 
-    fun movePacmanRight(pixels: Int) {
-        //Checks if coordinates are less than 1 so it doesn't go past boundaries
-        if (pacx + pixels + pacBitmap.width > 0) {
-            pacx = pacx + pixels
-            doCollisionCheck()
-            gameView.invalidate()
-
-        }
-    }
 
 
     //TODO check if the pacman touches a gold coin

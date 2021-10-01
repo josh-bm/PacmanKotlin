@@ -29,7 +29,15 @@ class GameView : View {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
+    }
+
+
+
 
     //In the onDraw we put all our code that should be
     //drawn whenever we update the screen.
