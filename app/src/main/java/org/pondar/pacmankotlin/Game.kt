@@ -97,9 +97,6 @@ class Game(private var context: Context,view: TextView) {
     }
 
 
-
-
-
     //TODO check if the pacman touches a gold coin
     //and if yes, then update the neccesseary data
     //for the gold coins and the points
