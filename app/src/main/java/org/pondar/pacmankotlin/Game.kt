@@ -122,12 +122,6 @@ class Game(private var context: Context,view: TextView) {
         gameView.invalidate()//redraw everything
     }
 
-    fun distance(x1:Int,y1:Int,x2:Int,y2:Int) : Float {
-        // calculate distance and return it
-        var dx : Double = (x2-x1).toDouble()
-        var dy : Double = (y2-y1).toDouble()
-        return sqrt(Math.pow(dx, 2.0) + Math.pow(dy, 2.0)).toFloat()
-    }
 
 
     //TODO check if the pacman touches a gold coin
@@ -136,13 +130,24 @@ class Game(private var context: Context,view: TextView) {
     //so you need to go through the arraylist of goldcoins and
     //check each of them for a collision with the pacman
     fun doCollisionCheck() {
+        fun distance(x1:Int,y1:Int,x2:Int,y2:Int) : Float {
+            // calculate distance and return it
+            var dx : Double = (x2-x1).toDouble()
+            var dy : Double = (y2-y1).toDouble()
+            return sqrt(Math.pow(dx, 2.0) + Math.pow(dy, 2.0)).toFloat()
+        }
+
         var pacCenter = pacBitmap.height/2
         var coinCenter = coinBitmap.height/2
 
         for(coin in coins){
-            if (pacCenter == coinCenter) {
-                coin.taken == true
+            if (distance(pacx + pacCenter,pacy + pacCenter,coin.coinx + coinCenter,coin.coiny + coinCenter) < 20){
+                coin.isTaken = true
             }
+        }
+
+        if(coins.filter{it.isTaken}.isNullOrEmpty()){
+            //running = false
         }
     }
 

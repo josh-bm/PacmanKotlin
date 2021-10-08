@@ -160,6 +160,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             running = false
             binding.textView.text = getString(R.string.timerValue,counter)
 
+        } else if (v.id == R.id.action_newGame){
+            game.newGame()
         }
     }
 

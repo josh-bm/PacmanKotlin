@@ -65,7 +65,7 @@ class GameView : View {
 
         //TODO loop through the list of goldcoins and draw them here
         for (coin in game.coins){
-            if(coin.taken == false) {
+            if(!coin.isTaken) {
                 canvas.drawBitmap(
                     game.coinBitmap, coin.coinx.toFloat(),
                     coin.coiny.toFloat(), paint
