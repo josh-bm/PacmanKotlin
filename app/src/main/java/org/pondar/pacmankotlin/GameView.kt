@@ -64,8 +64,15 @@ class GameView : View {
                 game.pacy.toFloat(), paint)
 
         //TODO loop through the list of goldcoins and draw them here
-        canvas.drawBitmap(game.coinBitmap, game.coinx.toFloat(),
-            game.coiny.toFloat(), paint)
+        for (coin in game.coins){
+            if(coin.taken == false) {
+                canvas.drawBitmap(
+                    game.coinBitmap, coin.coinx.toFloat(),
+                    coin.coiny.toFloat(), paint
+                )
+            }
+        }
+
 
         game.doCollisionCheck()
         super.onDraw(canvas)
