@@ -47,6 +47,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.stopButton.setOnClickListener(this)
         binding.resetButton.setOnClickListener(this)
 
+        binding.moveUp.setOnClickListener(this)
+        binding.moveDown.setOnClickListener(this)
+        binding.moveLeft.setOnClickListener(this)
+        binding.moveRight.setOnClickListener(this)
+
         //make a new timer
         running = true //should the game be running?
 
@@ -64,27 +69,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         game.setGameView(binding.gameView)
         binding.gameView.setGame(game)
         game.newGame()
-
-        binding.moveUp.setOnClickListener {
-            game.moveUp(50)
-
-        }
-
-        binding.moveDown.setOnClickListener {
-            game.moveDown(50)
-
-        }
-
-        //correct
-        binding.moveLeft.setOnClickListener {
-            game.moveLeft(50)
-
-        //correct
-        }
-        binding.moveRight.setOnClickListener {
-            game.moveRight(50)
-
-        }
     }
 
     override fun onStop() {
@@ -162,6 +146,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         } else if (v.id == R.id.action_newGame){
             game.newGame()
+
+        } else if (v.id == R.id.moveUp){
+            game.moveUp(50)
+
+        } else if (v.id == R.id.moveDown){
+            game.moveDown(50)
+
+        } else if (v.id == R.id.moveLeft){
+            game.moveLeft(50)
+
+        } else if (v.id == R.id.moveLeft){
+            game.moveLeft(50)
+
         }
     }
 
