@@ -137,10 +137,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (v.id == R.id.stopButton) {
             game.running = false
         } else if (v.id == R.id.action_newGame){
-            counter = 0
-            game.newGame() //you should call the newGame method instead of this
             game.running = false
+            counter = 0
             binding.textView.text = getString(R.string.timerValue,counter)
+
+            game.newGame() //you should call the newGame method instead of this
+
 
         } else if (v.id == R.id.moveUp){
             game.moveUp(50)

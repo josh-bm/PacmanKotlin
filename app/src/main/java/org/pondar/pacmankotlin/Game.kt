@@ -5,10 +5,12 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import java.lang.Math.random
 import java.lang.Math.sqrt
 import java.util.ArrayList
 import kotlin.math.pow
+import kotlin.random.Random
 
 
 /**
@@ -60,16 +62,26 @@ class Game(private var context: Context,view: TextView) {
     fun initializeGoldcoins()
     {
         //DO Stuff to initialize the array list with some coins.
-        var coin1 = GoldCoin(100, 100, false)
-        var coin2 = GoldCoin(200, 200, false)
-        var coin3 = GoldCoin(300, 300, false)
-        var coin4 = GoldCoin(400, 400, false)
-        var coin5 = GoldCoin(500, 500, false)
+        var coin1 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
+        var coin2 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
+        var coin3 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
+        var coin4 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
+        var coin5 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
+        var coin6 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
+        var coin7 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
+        var coin8 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
+        var coin9 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
+        var coin10 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
         coins.add(coin1)
         coins.add(coin2)
         coins.add(coin3)
         coins.add(coin4)
         coins.add(coin5)
+        coins.add(coin6)
+        coins.add(coin7)
+        coins.add(coin8)
+        coins.add(coin9)
+        coins.add(coin10)
 
         coinsInitialized = true
     }
@@ -78,6 +90,8 @@ class Game(private var context: Context,view: TextView) {
     fun newGame() {
         pacx = 50
         pacy = 400 //just some starting coordinates - you can change this.
+
+        coins.clear()
 
         //reset the points
         coinsInitialized = false
@@ -143,7 +157,7 @@ class Game(private var context: Context,view: TextView) {
         var coinCenter = coinBitmap.height/2
 
         for(coin in coins){
-            if (distance(pacx + pacCenter,pacy + pacCenter,coin.coinx + coinCenter,coin.coiny + coinCenter) < 20){
+            if (distance(pacx + pacCenter,pacy + pacCenter,coin.coinx + coinCenter,coin.coiny + coinCenter) < 30){
                 points++
                 pointsView.text = "${context.resources.getString(R.string.points)} $points"
                 coin.isTaken = true
@@ -151,8 +165,12 @@ class Game(private var context: Context,view: TextView) {
             }
         }
 
-        if(coins.filter{it.isTaken}.isNullOrEmpty()){
-            //running = false
+
+
+        if(coins.filter{!it.isTaken}.isNullOrEmpty()){
+            running = false
+            Toast.makeText(this.context, "You have won the game", Toast.LENGTH_LONG,).show()
+
         }
     }
 
