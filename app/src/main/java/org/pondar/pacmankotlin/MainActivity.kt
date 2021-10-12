@@ -52,8 +52,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.moveLeft.setOnClickListener(this)
         binding.moveRight.setOnClickListener(this)
 
-        //make a new timer
-        game.running = true //should the game be running?
 
         myTimer.schedule(object : TimerTask() {
             override fun run() {

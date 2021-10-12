@@ -22,7 +22,7 @@ class Game(private var context: Context,view: TextView) {
         var pacBitmap: Bitmap
         var coinBitmap: Bitmap
 
-        var running = false
+        var running = true
 
         var pacx: Int = 0
         var pacy: Int = 0
