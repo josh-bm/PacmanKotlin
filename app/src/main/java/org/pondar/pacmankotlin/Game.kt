@@ -3,6 +3,7 @@ package org.pondar.pacmankotlin
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.widget.TextView
 import java.lang.Math.random
 import java.lang.Math.sqrt
@@ -143,7 +144,10 @@ class Game(private var context: Context,view: TextView) {
 
         for(coin in coins){
             if (distance(pacx + pacCenter,pacy + pacCenter,coin.coinx + coinCenter,coin.coiny + coinCenter) < 20){
+                points++
+                pointsView.text = "${context.resources.getString(R.string.points)} $points"
                 coin.isTaken = true
+                Log.d("points", "$points")
             }
         }
 

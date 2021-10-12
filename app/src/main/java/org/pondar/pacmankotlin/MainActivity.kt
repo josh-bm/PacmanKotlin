@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.startButton.setOnClickListener(this)
         binding.stopButton.setOnClickListener(this)
-        binding.resetButton.setOnClickListener(this)
+
 
         binding.moveUp.setOnClickListener(this)
         binding.moveDown.setOnClickListener(this)
@@ -136,14 +136,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             game.running = true
         } else if (v.id == R.id.stopButton) {
             game.running = false
-        } else if (v.id == R.id.resetButton) {
+        } else if (v.id == R.id.action_newGame){
             counter = 0
             game.newGame() //you should call the newGame method instead of this
             game.running = false
             binding.textView.text = getString(R.string.timerValue,counter)
-
-        } else if (v.id == R.id.action_newGame){
-            game.newGame()
 
         } else if (v.id == R.id.moveUp){
             game.moveUp(50)
