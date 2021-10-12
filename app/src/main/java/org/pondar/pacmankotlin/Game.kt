@@ -16,12 +16,13 @@ import kotlin.math.pow
  */
 
 class Game(private var context: Context,view: TextView) {
-
         private var pointsView: TextView = view
         private var points : Int = 0
         //bitmap of the pacman
         var pacBitmap: Bitmap
         var coinBitmap: Bitmap
+
+        var running = false
 
         var pacx: Int = 0
         var pacy: Int = 0

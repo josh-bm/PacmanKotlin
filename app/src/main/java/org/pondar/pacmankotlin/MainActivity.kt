@@ -19,11 +19,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     //constants for directions - define the rest yourself
     val UP = 1
     val DOWN = 2
-    private val LEFT = 3
-    private val RIGHT = 4
+    val LEFT = 3
+    val RIGHT = 4
 
     //you should put the "running" and "direction" variable in the game class
-    private var running = false
+
     var direction = RIGHT
 
     //reference to the game class.
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.moveRight.setOnClickListener(this)
 
         //make a new timer
-        running = true //should the game be running?
+        game.running = true //should the game be running?
 
         myTimer.schedule(object : TimerTask() {
             override fun run() {
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val timerTick = Runnable {
         //This method runs in the same thread as the UI.
         // so we can draw
-        if (running) {
+        if (game.running) {
             counter++
             //update the counter - notice this is NOT seconds in this example
             //you need TWO counters - one for the timer count down that will
@@ -135,13 +135,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     //if anything is pressed - we do the checks here
     override fun onClick(v: View) {
         if (v.id == R.id.startButton) {
-            running = true
+            game.running = true
         } else if (v.id == R.id.stopButton) {
-            running = false
+            game.running = false
         } else if (v.id == R.id.resetButton) {
             counter = 0
             game.newGame() //you should call the newGame method instead of this
-            running = false
+            game.running = false
             binding.textView.text = getString(R.string.timerValue,counter)
 
         } else if (v.id == R.id.action_newGame){
