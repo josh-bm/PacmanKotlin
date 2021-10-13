@@ -174,12 +174,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (v.id == R.id.stopButton) {
             game.running = false
 
-        } else if (v.id == R.id.action_newGame){
-            game.running = false
-            game.newGame() //you should call the newGame method instead of this
-            countdown = 60
-            binding.textView.text = getString(R.string.timerValue,countdown)
-
         } else if (v.id == R.id.moveUp){
             game.direction = game.UP
 
@@ -211,6 +205,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             return true
         } else if (id == R.id.action_newGame) {
             Toast.makeText(this, "New Game clicked", Toast.LENGTH_LONG).show()
+            game.running = false
+            countdown = 60
+            binding.textView.text = getString(R.string.timerValue,countdown)
             game.newGame()
             return true
         }

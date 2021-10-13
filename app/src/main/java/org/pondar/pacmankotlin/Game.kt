@@ -138,6 +138,7 @@ class Game(private var context: Context,view: TextView) {
         initializeGoldcoins()
 
         gameView.invalidate() //redraw screen
+        running = true
     }
 
     fun setSize(h: Int, w: Int) {
