@@ -6,10 +6,8 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
-import java.lang.Math.random
 import java.lang.Math.sqrt
 import java.util.ArrayList
-import kotlin.math.pow
 import kotlin.random.Random
 
 
@@ -24,17 +22,27 @@ class Game(private var context: Context,view: TextView) {
         //bitmap of the pacman
         var pacBitmap: Bitmap
         var coinBitmap: Bitmap
+        var enemyBitmap: Bitmap
 
         var running = true
 
+        // pacman
         var pacx: Int = 0
         var pacy: Int = 0
+
+        // enemies
+        //var enemyx: Int = 0
+        //var enemyy: Int = 0
 
         //did we initialize the coins?
         var coinsInitialized = false
 
         //the list of goldcoins - initially empty
         var coins = ArrayList<GoldCoin>()
+
+        // the lis of enemies
+        var enemies = ArrayList<Enemy>()
+        var enemyInitialized = false
 
         //a reference to the gameview
         private lateinit var gameView: GameView
@@ -48,6 +56,9 @@ class Game(private var context: Context,view: TextView) {
     init {
         var pacBitmapFactory = BitmapFactory.decodeResource(context.resources, R.drawable.pacman)
         pacBitmap = Bitmap.createScaledBitmap(pacBitmapFactory,50,50,false);
+
+        var enemyBitmapFactory = BitmapFactory.decodeResource(context.resources, R.drawable.enemy)
+        enemyBitmap = Bitmap.createScaledBitmap(enemyBitmapFactory,50,50,false);
 
         var coinBitmapFactory = BitmapFactory.decodeResource(context.resources, R.drawable.coin)
         coinBitmap = Bitmap.createScaledBitmap(coinBitmapFactory,50,50,false);
@@ -86,18 +97,31 @@ class Game(private var context: Context,view: TextView) {
         coinsInitialized = true
     }
 
+    fun initializeEnemy(){
+        var enemy1 = Enemy(Random.nextInt(1,500), Random.nextInt(1,500))
+        var enemy2 = Enemy(Random.nextInt(1,500), Random.nextInt(1,500))
+        var enemy3 = Enemy(Random.nextInt(1,500), Random.nextInt(1,500))
+
+        enemies.add(enemy1)
+        enemies.add(enemy2)
+        enemies.add(enemy3)
+
+        enemyInitialized = true
+    }
 
     fun newGame() {
         pacx = 50
         pacy = 400 //just some starting coordinates - you can change this.
 
-        coins.clear()
+        enemies.clear()
+        enemyInitialized = false
+        initializeEnemy()
 
         //reset the points
+        coins.clear()
         coinsInitialized = false
         points = 0
         pointsView.text = "${context.resources.getString(R.string.points)} $points"
-
         initializeGoldcoins()
 
         gameView.invalidate() //redraw screen
@@ -138,7 +162,10 @@ class Game(private var context: Context,view: TextView) {
         gameView.invalidate()//redraw everything
     }
 
+    fun enemyMovement(pixels: Int){
 
+        gameView.invalidate()
+    }
 
     //TODO check if the pacman touches a gold coin
     //and if yes, then update the neccesseary data

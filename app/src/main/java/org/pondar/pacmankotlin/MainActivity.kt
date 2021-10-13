@@ -93,6 +93,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val timerTick = Runnable {
         //This method runs in the same thread as the UI.
         // so we can draw
+        game.enemyMovement(50)
+
+
         if (game.running) {
             counter++
             //update the counter - notice this is NOT seconds in this example
