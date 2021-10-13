@@ -14,8 +14,12 @@ import java.util.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    private var myTimer: Timer = Timer()
-    var counter : Int = 0
+    private var countupTimer: Timer = Timer()
+
+    private var countdownTimer: Timer = Timer()
+
+    var countup: Int = 0
+    var countdown : Int = 60
 
 
     //reference to the game class.
@@ -44,14 +48,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.moveLeft.setOnClickListener(this)
         binding.moveRight.setOnClickListener(this)
 
-
-        myTimer.schedule(object : TimerTask() {
+        countupTimer.schedule(object : TimerTask() {
             override fun run() {
                 timerMethod()
             }
 
         }, 0, 200) //0 indicates we start now, 200
         //is the number of miliseconds between each call
+
+        countdownTimer.schedule(object : TimerTask() {
+            override fun run() {
+                timerMethod()
+            }
+
+        }, 0, 1000) //0 indicates we start now, 200
+        //is the number of miliseconds between each call
+
+
+
 
         game = Game(this,binding.pointsView)
 
@@ -64,7 +78,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onStop() {
         super.onStop()
         //just to make sure if the app is killed, that we stop the timer.
-        myTimer.cancel()
+        countupTimer.cancel()
+        countdownTimer.cancel()
     }
 
     private fun timerMethod() {
@@ -86,12 +101,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         //This method runs in the same thread as the UI.
         // so we can draw
         if (game.running) {
-            counter++
-            //update the counter - notice this is NOT seconds in this example
-            //you need TWO counters - one for the timer count down that will
+            countup++
+            countdown--
+            // update the counter - notice this is NOT seconds in this example
+            // you need TWO counters - one for the timer count down that will
             // run every second and one for the pacman which need to run
             //faster than every second
-            binding.textView.text = getString(R.string.timerValue,counter)
+            binding.textView.text = getString(R.string.timerValue,countdown)
+
+            if(countdown == 0){
+                game.running = false
+            }
 
             if (game.direction == game.RIGHT)
             { // move right
@@ -131,8 +151,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             game.running = false
         } else if (v.id == R.id.action_newGame){
             game.running = false
-            counter = 0
-            binding.textView.text = getString(R.string.timerValue,counter)
+            countdown = 0
+            binding.textView.text = getString(R.string.timerValue,countdown)
 
             game.newGame() //you should call the newGame method instead of this
 
