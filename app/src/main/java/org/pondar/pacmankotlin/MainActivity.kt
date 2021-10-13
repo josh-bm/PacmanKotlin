@@ -151,13 +151,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private val timerDownTick = Runnable {
-        if (game.running) {
+        if (!game.running) {
+            countdownTimer.cancel()
+
+        } else if(game.running){
+            countdownTimer.schedule(object : TimerTask() {
+                override fun run() {
+                    timerDownMethod()
+                }
+
+            }, 0, 100) //0 indicates we start now, 200
+            //is the number of miliseconds between each call
             countdown--
             binding.textView.text = getString(R.string.timerValue,countdown)
         }
 
         if(countdown == 0){
-            game.running = false
+            countdownTimer.cancel()
+
             Toast.makeText(this, "Game over", Toast.LENGTH_LONG).show()
         }
     }
@@ -167,6 +178,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if (v.id == R.id.startButton) {
             if(countdown != 0){
                 game.running = true
+                countdown--
             }
 
         } else if (v.id == R.id.stopButton) {
@@ -174,6 +186,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         } else if (v.id == R.id.action_newGame){
             game.running = false
+
             countdown = 60
             binding.textView.text = getString(R.string.timerValue,countdown)
 
