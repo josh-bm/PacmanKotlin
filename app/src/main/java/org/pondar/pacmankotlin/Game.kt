@@ -212,6 +212,7 @@ class Game(private var context: Context,view: TextView) {
 
         var pacCenter = pacBitmap.height/2
         var coinCenter = coinBitmap.height/2
+        var enemyCenter = enemyBitmap.height/2
 
         for(coin in coins){
             if (distance(pacx + pacCenter,pacy + pacCenter,coin.coinx + coinCenter,coin.coiny + coinCenter) < 30){
@@ -221,6 +222,12 @@ class Game(private var context: Context,view: TextView) {
                 pointsView.text = "${context.resources.getString(R.string.points)} $points"
                 Log.d("points", "$points")
             }
+        }
+
+        for(enemy in enemies){
+            if(distance(pacx + pacCenter, pacy + pacCenter, enemy.enemyx + enemyCenter, enemy.enemyy + enemyCenter) < 30)
+                running = false
+            Toast.makeText(this.context, "Game over", Toast.LENGTH_LONG,).show()
         }
 
 

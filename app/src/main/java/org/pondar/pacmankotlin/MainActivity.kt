@@ -160,7 +160,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         if(countdown == 0){
             game.running = false
-            Toast.makeText(this, "Game over", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Time has run out", Toast.LENGTH_LONG).show()
         }
 
     }
