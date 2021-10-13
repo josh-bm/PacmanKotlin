@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         countupTimer.schedule(object : TimerTask() {
             override fun run() {
-                timerMethod()
+                timerUpMethod()
             }
 
         }, 0, 200) //0 indicates we start now, 200
@@ -58,13 +58,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         countdownTimer.schedule(object : TimerTask() {
             override fun run() {
-                timerMethod()
+                timerDownMethod()
             }
 
-        }, 0, 1000) //0 indicates we start now, 200
+        }, 0, 100) //0 indicates we start now, 200
         //is the number of miliseconds between each call
-
-
 
 
         game = Game(this,binding.pointsView)
@@ -82,7 +80,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         countdownTimer.cancel()
     }
 
-    private fun timerMethod() {
+    private fun timerUpMethod() {
         //This method is called directly by the timer
         //and runs in the same thread as the timer - i.e the background
 
@@ -92,26 +90,35 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         //We call the method that will work with the UI
         //through the runOnUiThread method.
 
-        this.runOnUiThread(timerTick)
+        this.runOnUiThread(timerUpTick)
         //timerTick.run() //try doing this instead of the above...will crash the app!
 
     }
 
-    private val timerTick = Runnable {
+    private fun timerDownMethod() {
+        //This method is called directly by the timer
+        //and runs in the same thread as the timer - i.e the background
+
+        // we could do updates here TO GAME LOGIC,
+        // but not updates TO ACTUAL UI
+
+        //We call the method that will work with the UI
+        //through the runOnUiThread method.
+
+        this.runOnUiThread(timerDownTick)
+        //timerTick.run() //try doing this instead of the above...will crash the app!
+
+    }
+
+    private val timerUpTick = Runnable {
         //This method runs in the same thread as the UI.
         // so we can draw
         if (game.running) {
             countup++
-            countdown--
             // update the counter - notice this is NOT seconds in this example
             // you need TWO counters - one for the timer count down that will
             // run every second and one for the pacman which need to run
             //faster than every second
-            binding.textView.text = getString(R.string.timerValue,countdown)
-
-            if(countdown == 0){
-                game.running = false
-            }
 
             if (game.direction == game.RIGHT)
             { // move right
@@ -143,15 +150,31 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private val timerDownTick = Runnable {
+        if (game.running) {
+            countdown--
+            binding.textView.text = getString(R.string.timerValue,countdown)
+        }
+
+        if(countdown == 0){
+            game.running = false
+            Toast.makeText(this, "Game over", Toast.LENGTH_LONG).show()
+        }
+    }
+
     //if anything is pressed - we do the checks here
     override fun onClick(v: View) {
         if (v.id == R.id.startButton) {
-            game.running = true
+            if(countdown != 0){
+                game.running = true
+            }
+
         } else if (v.id == R.id.stopButton) {
             game.running = false
+
         } else if (v.id == R.id.action_newGame){
             game.running = false
-            countdown = 0
+            countdown = 60
             binding.textView.text = getString(R.string.timerValue,countdown)
 
             game.newGame() //you should call the newGame method instead of this
