@@ -123,22 +123,23 @@ class Game(private var context: Context,view: TextView) {
         pacx = 50
         pacy = 400 //just some starting coordinates - you can change this.
 
+        //reset the points
+        points = 0
+        pointsView.text = "${context.resources.getString(R.string.points)} $points"
+
+        //reset the enemies
         enemies.clear()
         enemyInitialized = false
         initializeEnemies()
 
-        //reset the points
+        //reset the coins
         coins.clear()
         coinsInitialized = false
-        points = 0
-        pointsView.text = "${context.resources.getString(R.string.points)} $points"
-
         initializeGoldcoins()
 
         gameView.invalidate() //redraw screen
-        running=true
-
     }
+
     fun setSize(h: Int, w: Int) {
         this.h = h
         this.w = w
