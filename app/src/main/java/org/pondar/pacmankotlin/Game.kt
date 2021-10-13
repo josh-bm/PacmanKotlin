@@ -40,10 +40,6 @@ class Game(private var context: Context,view: TextView) {
         var pacx: Int = 0
         var pacy: Int = 0
 
-        // enemies
-        //var enemyx: Int = 0
-        //var enemyy: Int = 0
-
         //did we initialize the coins?
         var coinsInitialized = false
 
@@ -113,8 +109,8 @@ class Game(private var context: Context,view: TextView) {
         var enemy3 = Enemy(Random.nextInt(1,500), Random.nextInt(1,500))
 
         enemies.add(enemy1)
-        enemies.add(enemy2)
-        enemies.add(enemy3)
+        //enemies.add(enemy2)
+        //enemies.add(enemy3)
 
         enemyInitialized = true
     }
@@ -146,11 +142,27 @@ class Game(private var context: Context,view: TextView) {
         this.w = w
     }
 
-    fun moveRight(pixels: Int) {
-        //still within our boundaries?
-        // right boundary
-        if (pacx + pixels + pacBitmap.width < w)
-            pacx += pixels
+    fun moveUp(pixels: Int){
+        // Upper boundary
+        if (pacy - pixels + pacBitmap.height > 0 + pacBitmap.height)
+            pacy -= pixels
+
+        for(enemy in enemies) {
+            if (enemy.enemyy - pixels + enemyBitmap.height > 0 + enemyBitmap.height)
+                enemy.enemyy -= pixels
+        }
+        gameView.invalidate()//redraw everything
+    }
+
+    fun moveDown(pixels: Int){
+        // bottom boundary
+        if (pacy + pixels + pacBitmap.height < h)
+            pacy += pixels
+
+        for(enemy in enemies) {
+            if(enemy.enemyy + pixels + enemyBitmap.height < h)
+                enemy.enemyy += pixels
+        }
         gameView.invalidate()//redraw everything
     }
 
@@ -159,27 +171,31 @@ class Game(private var context: Context,view: TextView) {
         // if location + pixels added + size of pacman > 0 + size of pacman
         if(pacx - pixels + pacBitmap.width > 0 + pacBitmap.width)
             pacx -= pixels
+
+        for(enemy in enemies) {
+            if(enemy.enemyx - pixels + enemyBitmap.width > 0 + enemyBitmap.width)
+                enemy.enemyx -= pixels
+        }
         gameView.invalidate()//redraw everything
     }
 
-    fun moveUp(pixels: Int){
-        // Upper boundary
-        if (pacy - pixels + pacBitmap.height > 0 + pacBitmap.height)
-            pacy -= pixels
+
+    fun moveRight(pixels: Int) {
+        //still within our boundaries?
+        // right boundary
+        if (pacx + pixels + pacBitmap.width < w)
+            pacx += pixels
+
+        for(enemy in enemies) {
+            if (enemy.enemyx + pixels + enemyBitmap.width < w)
+                enemy.enemyx += pixels
+        }
+
         gameView.invalidate()//redraw everything
     }
 
-    fun moveDown(pixels: Int){
-        // bottom boundary
-        if (pacy + pixels + pacBitmap.height < h)
-            pacy += pixels
-        gameView.invalidate()//redraw everything
-    }
 
-    fun enemyMovement(pixels: Int){
 
-        gameView.invalidate()
-    }
 
     //TODO check if the pacman touches a gold coin
     //and if yes, then update the neccesseary data

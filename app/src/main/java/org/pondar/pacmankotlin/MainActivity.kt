@@ -11,6 +11,7 @@ import android.view.View.OnClickListener
 import android.widget.Toast
 import org.pondar.pacmankotlin.databinding.ActivityMainBinding
 import java.util.*
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -61,7 +62,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 timerDownMethod()
             }
 
-        }, 0, 100) //0 indicates we start now, 200
+        }, 0, 1000) //0 indicates we start now, 200
         //is the number of miliseconds between each call
 
 
@@ -120,6 +121,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             // run every second and one for the pacman which need to run
             //faster than every second
 
+
             if (game.direction == game.RIGHT)
             { // move right
                 game.moveRight(50)
@@ -145,7 +147,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 game.moveDown(50)
             }
 
-            game.enemyMovement(50)
+
 
         }
     }

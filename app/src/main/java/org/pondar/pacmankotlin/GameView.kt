@@ -65,7 +65,7 @@ class GameView : View {
 
         //draw the enemies
         for(enemy in game.enemies){
-            if(!enemy.isAlive) {
+            if(enemy.isAlive) {
                 canvas.drawBitmap(
                     game.enemyBitmap, enemy.enemyx .toFloat(),
                     enemy.enemyy.toFloat(), paint
