@@ -26,6 +26,16 @@ class Game(private var context: Context,view: TextView) {
 
         var running = true
 
+        //constants for directions - define the rest yourself
+        val UP = 1
+        val DOWN = 2
+        val LEFT = 3
+        val RIGHT = 4
+
+        //you should put the "running" and "direction" variable in the game class
+
+        var direction = RIGHT
+
         // pacman
         var pacx: Int = 0
         var pacy: Int = 0
@@ -97,7 +107,7 @@ class Game(private var context: Context,view: TextView) {
         coinsInitialized = true
     }
 
-    fun initializeEnemy(){
+    fun initializeEnemies(){
         var enemy1 = Enemy(Random.nextInt(1,500), Random.nextInt(1,500))
         var enemy2 = Enemy(Random.nextInt(1,500), Random.nextInt(1,500))
         var enemy3 = Enemy(Random.nextInt(1,500), Random.nextInt(1,500))
@@ -115,16 +125,18 @@ class Game(private var context: Context,view: TextView) {
 
         enemies.clear()
         enemyInitialized = false
-        initializeEnemy()
+        initializeEnemies()
 
         //reset the points
         coins.clear()
         coinsInitialized = false
         points = 0
         pointsView.text = "${context.resources.getString(R.string.points)} $points"
+
         initializeGoldcoins()
 
         gameView.invalidate() //redraw screen
+        running=true
 
     }
     fun setSize(h: Int, w: Int) {
@@ -185,9 +197,10 @@ class Game(private var context: Context,view: TextView) {
 
         for(coin in coins){
             if (distance(pacx + pacCenter,pacy + pacCenter,coin.coinx + coinCenter,coin.coiny + coinCenter) < 30){
+
+                coin.isTaken = true
                 points++
                 pointsView.text = "${context.resources.getString(R.string.points)} $points"
-                coin.isTaken = true
                 Log.d("points", "$points")
             }
         }

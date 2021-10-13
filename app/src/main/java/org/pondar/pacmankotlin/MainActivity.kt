@@ -16,15 +16,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private var myTimer: Timer = Timer()
     var counter : Int = 0
-    //constants for directions - define the rest yourself
-    val UP = 1
-    val DOWN = 2
-    val LEFT = 3
-    val RIGHT = 4
 
-    //you should put the "running" and "direction" variable in the game class
-
-    var direction = RIGHT
 
     //reference to the game class.
     private lateinit var game: Game
@@ -93,9 +85,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val timerTick = Runnable {
         //This method runs in the same thread as the UI.
         // so we can draw
-        game.enemyMovement(50)
-
-
         if (game.running) {
             counter++
             //update the counter - notice this is NOT seconds in this example
@@ -104,31 +93,32 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             //faster than every second
             binding.textView.text = getString(R.string.timerValue,counter)
 
-
-            if (direction==RIGHT)
+            if (game.direction == game.RIGHT)
             { // move right
                 game.moveRight(50)
                 //move the pacman - you
                 //should call a method on your game class to move
                 //the pacman instead of this - you have already made that
             }
-            else if (direction==LEFT)
+            else if (game.direction == game.LEFT)
             {
                 //move pacman left.
                 game.moveLeft(50)
             }
 
-            else if (direction==UP)
+            else if (game.direction == game.UP)
             {
                 //move pacman left.
                 game.moveUp(50)
             }
 
-            else if (direction==DOWN)
+            else if (game.direction == game.DOWN)
             {
                 //move pacman left.
                 game.moveDown(50)
             }
+
+            game.enemyMovement(50)
 
         }
     }
@@ -148,16 +138,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 
         } else if (v.id == R.id.moveUp){
-            game.moveUp(50)
+            game.direction = game.UP
 
         } else if (v.id == R.id.moveDown){
-            game.moveDown(50)
+            game.direction = game.DOWN
 
         } else if (v.id == R.id.moveLeft){
-            game.moveLeft(50)
+            game.direction = game.LEFT
 
-        } else if (v.id == R.id.moveLeft){
-            game.moveLeft(50)
+        } else if (v.id == R.id.moveRight){
+            game.direction = game.RIGHT
 
         }
     }
