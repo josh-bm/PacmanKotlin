@@ -37,8 +37,6 @@ class GameView : View {
     }
 
 
-
-
     //In the onDraw we put all our code that should be
     //drawn whenever we update the screen.
     override fun onDraw(canvas: Canvas) {

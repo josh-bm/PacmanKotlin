@@ -1,5 +1,6 @@
 package org.pondar.pacmankotlin
 
+import android.content.Context
 import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,7 +12,7 @@ import android.view.View.OnClickListener
 import android.widget.Toast
 import org.pondar.pacmankotlin.databinding.ActivityMainBinding
 import java.util.*
-import kotlin.random.Random
+
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -19,14 +20,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private var countdownTimer: Timer = Timer()
 
-    var countup: Int = 0
-    var countdown : Int = 60
+    var countup = 0
+    var countdown = 60
 
 
     //reference to the game class.
     private lateinit var game: Game
     private lateinit var binding : ActivityMainBinding
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -122,32 +122,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             //faster than every second
 
 
-            if (game.direction == game.RIGHT)
-            { // move right
-                game.moveRight(50)
-                //move the pacman - you
-                //should call a method on your game class to move
-                //the pacman instead of this - you have already made that
+            when(game.direction){
+                1 -> game.moveUp(50)
+                2 -> game.moveDown(50)
+                3 -> game.moveLeft(50)
+                4 -> game.moveRight(50)
             }
-            else if (game.direction == game.LEFT)
-            {
-                //move pacman left.
-                game.moveLeft(50)
-            }
-
-            else if (game.direction == game.UP)
-            {
-                //move pacman left.
-                game.moveUp(50)
-            }
-
-            else if (game.direction == game.DOWN)
-            {
-                //move pacman left.
-                game.moveDown(50)
-            }
-
-
 
         }
     }
@@ -168,7 +148,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     //if anything is pressed - we do the checks here
     override fun onClick(v: View) {
         if (v.id == R.id.startButton) {
-            if(countdown < 0){
+            if(countdown > 0){
                 game.running = true
                 countdown--
             }

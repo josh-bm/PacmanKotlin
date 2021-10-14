@@ -17,44 +17,46 @@ import kotlin.random.Random
  */
 
 class Game(private var context: Context,view: TextView) {
-        private var pointsView: TextView = view
-        private var points : Int = 0
-        //bitmap of the pacman
-        var pacBitmap: Bitmap
-        var coinBitmap: Bitmap
-        var enemyBitmap: Bitmap
+    private var pointsView: TextView = view
+    private var points : Int = 0
+    //bitmap of the pacman
+    var pacBitmap: Bitmap
+    var coinBitmap: Bitmap
+    var enemyBitmap: Bitmap
 
-        var running = true
+    var running = true
 
-        //constants for directions - define the rest yourself
-        val UP = 1
-        val DOWN = 2
-        val LEFT = 3
-        val RIGHT = 4
+    //constants for directions - define the rest yourself
+    val UP = 1
+    val DOWN = 2
+    val LEFT = 3
+    val RIGHT = 4
 
-        //you should put the "running" and "direction" variable in the game class
+    //you should put the "running" and "direction" variable in the game class
 
-        var direction = RIGHT
+    var direction = RIGHT
 
-        // pacman
-        var pacx: Int = 0
-        var pacy: Int = 0
+    // pacman
+    var pacx: Int = 0
+    var pacy: Int = 0
 
-        //did we initialize the coins?
-        var coinsInitialized = false
+    //did we initialize the coins?
+    var coinsInitialized = false
 
-        //the list of goldcoins - initially empty
-        var coins = ArrayList<GoldCoin>()
+    //the list of goldcoins - initially empty
+    var coins = ArrayList<GoldCoin>()
 
-        // the lis of enemies
-        var enemies = ArrayList<Enemy>()
-        var enemyInitialized = false
+    // the lis of enemies
+    var enemies = ArrayList<Enemy>()
+    var enemyInitialized = false
 
-        //a reference to the gameview
-        private lateinit var gameView: GameView
+    //a reference to the gameview
+    private lateinit var gameView: GameView
 
-        private var h: Int = 0
-        private var w: Int = 0 //height and width of screen
+    private var h: Int = 0
+    private var w: Int = 0 //height and width of screen
+
+
 
 
     //The init code is called when we create a new Game class.
@@ -79,16 +81,16 @@ class Game(private var context: Context,view: TextView) {
     fun initializeGoldcoins()
     {
         //DO Stuff to initialize the array list with some coins.
-        var coin1 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
-        var coin2 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
-        var coin3 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
-        var coin4 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
-        var coin5 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
-        var coin6 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
-        var coin7 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
-        var coin8 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
-        var coin9 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
-        var coin10 = GoldCoin(Random.nextInt(1,500), Random.nextInt(1,500), false)
+        var coin1 = GoldCoin(Random.nextInt(10,500), Random.nextInt(10,500), false)
+        var coin2 = GoldCoin(Random.nextInt(10,500), Random.nextInt(10,500), false)
+        var coin3 = GoldCoin(Random.nextInt(10,500), Random.nextInt(10,500), false)
+        var coin4 = GoldCoin(Random.nextInt(10,500), Random.nextInt(10,500), false)
+        var coin5 = GoldCoin(Random.nextInt(10,500), Random.nextInt(10,500), false)
+        var coin6 = GoldCoin(Random.nextInt(10,500), Random.nextInt(10,500), false)
+        var coin7 = GoldCoin(Random.nextInt(10,500), Random.nextInt(10,500), false)
+        var coin8 = GoldCoin(Random.nextInt(10,500), Random.nextInt(10,500), false)
+        var coin9 = GoldCoin(Random.nextInt(10,500), Random.nextInt(10,500), false)
+        var coin10 = GoldCoin(Random.nextInt(10,500), Random.nextInt(10,500), false)
         coins.add(coin1)
         coins.add(coin2)
         coins.add(coin3)
@@ -109,8 +111,8 @@ class Game(private var context: Context,view: TextView) {
         var enemy3 = Enemy(Random.nextInt(1,500), Random.nextInt(1,500))
 
         enemies.add(enemy1)
-        //enemies.add(enemy2)
-        //enemies.add(enemy3)
+        enemies.add(enemy2)
+        enemies.add(enemy3)
 
         enemyInitialized = true
     }
@@ -132,6 +134,7 @@ class Game(private var context: Context,view: TextView) {
         coins.clear()
         coinsInitialized = false
         initializeGoldcoins()
+
 
         gameView.invalidate() //redraw screen
         running = true
@@ -215,7 +218,7 @@ class Game(private var context: Context,view: TextView) {
         var enemyCenter = enemyBitmap.height/2
 
         for(coin in coins){
-            if (distance(pacx + pacCenter,pacy + pacCenter,coin.coinx + coinCenter,coin.coiny + coinCenter) < 30){
+            if (distance(pacx + pacCenter,pacy + pacCenter,coin.coinx + coinCenter,coin.coiny + coinCenter) < 40){
 
                 coin.isTaken = true
                 points++
@@ -225,11 +228,12 @@ class Game(private var context: Context,view: TextView) {
         }
 
         for(enemy in enemies){
-            if(distance(pacx + pacCenter, pacy + pacCenter, enemy.enemyx + enemyCenter, enemy.enemyy + enemyCenter) < 30)
+            if(distance(pacx + pacCenter, pacy + pacCenter, enemy.enemyx + enemyCenter, enemy.enemyy + enemyCenter) < 40){
                 running = false
-            Toast.makeText(this.context, "Game over", Toast.LENGTH_LONG,).show()
-        }
+                Toast.makeText(this.context, "Game over", Toast.LENGTH_LONG,).show()
+            }
 
+        }
 
 
         if(coins.filter{!it.isTaken}.isNullOrEmpty()){
@@ -237,10 +241,6 @@ class Game(private var context: Context,view: TextView) {
             Toast.makeText(this.context, "You have won the game", Toast.LENGTH_LONG,).show()
 
         }
-    }
-
-    fun newLevel(){
-        
     }
 
 }
